@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DashBoard</title>
+  <link rel="stylesheet" href="dash.css">
+</head>
+
+<body>
+  <header class="headerdash">
+    <div class="saudacao">
+      <img src="./img/ptlogo2.svg" alt="#">
+      <h1>Recomendados para você <span id="b_usuario"></span></h1>
+    </div>
+  </header>
+  <div id="bk_recomendado"></div>
+  <div class="contrec">
+    <h1>Livros</h1>
+    <section class="livrosrec">
+      <ul class="slide_livrosrec">
+        <li><a href="">VER</a><img id="livro_1" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="livro_2" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="livro_3" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="livro_4" src="" alt="#"></li>
+      </ul>
+    </section>
+    <h1>Séries</h1>
+    <section class="livrosrec">
+      <ul class="slide_livrosrec">
+        <li><a href="">VER</a><img id="serie_1" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="serie_2" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="serie_3" src="" alt="#"></li>
+        <li><a href="">VER</a><img id="serie_4" src="" alt="#"></li>
+      </ul>
+    </section>
+    <h1>Mais</h1>
+    <section class="livrosrec">
+      <ul class="slide_livrosrec">
+        <li><a href="">VER</a><img id="mais_1" src="./img/maissuspense1.jpg" alt="#"></li>
+        <li><a href="">VER</a><img id="mais_2" src="./img/19984.jpg" alt="#"></li>
+        <li><a href="">VER</a><img id="mais_3" src="./img/19984.jpg" alt="#"></li>
+        <li><a href="">VER</a><img id="mais_4" src="./img/19984.jpg" alt="#"></li>
+      </ul>
+    </section>
+  </div>
+
+</body>
+
+<script>
+
+
+  let listaArray = [];
+  var listagem;
+  var anime;
+  var drama;
+  var comedia;
+  var suspense;
+  var cartoon;
+  var ficcao;
+  var outro;
+  var mudar;
+  var pos = -1;
+  function atualizarFeed(lista) {
+
+    var maioria = Math.max(...lista);
+    for (var i = 0; i < lista.length; i++) {
+      if (lista[i] == maioria) {
+        mudar = lista[i];
+        pos = i;
+      }
+    }
+
+    if (pos == 0) {
+      console.log("anime")
+      /* Livros  */
+      livro_1.src = "./img/akira.jpg";
+      livro_2.src = "./img/neuro.jpg";
+      livro_3.src = "./img/codeges.jpg";
+      livro_4.src = "./img/staingates.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/naruto.jpg)';
+      /* series */
+      serie_1.src = "./img/s4.jpg";
+      serie_2.src = "./img/s5.jpg";
+      serie_3.src = "./img/s6.png";
+      serie_4.src = "./img/s12.jpg";
+      /* mais */
+      mais_1.src = "./img/s13.jpeg";
+      mais_2.src = "./img/s14.jpg";
+      mais_3.src = "./img/startrek.jpg";
+      mais_4.src = "./img/s8.jpg";
+    } else if (pos == 1) {
+      console.log("drama");
+      /* Livros  */
+      livro_1.src = "./img/suspense1.jpg";
+      livro_2.src = "./img/suspense2.jpg";
+      livro_3.src = "./img/suspense3.jpg";
+      livro_4.src = "./img/suspense4.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/dramacapa.jpeg)';
+      /* series */
+      serie_1.src = "./img/seriesuspense1.jpg";
+      serie_2.src = "./img/seriesuspense2.jpg";
+      serie_3.src = "./img/seriesuspense3.png";
+      serie_4.src = "./img/seriesuspense4.jpg";
+      /* mais */
+      mais_1.src = "./img/s13.jpeg";
+      mais_2.src = "./img/s14.jpg";
+      mais_3.src = "./img/startrek.jpg";
+      mais_4.src = "./img/s8.jpg";
+    } else if (pos == 2) {
+      console.log("comedia");
+
+      livro_1.src = "./img/kalvin.jpg";
+      livro_2.src = "./img/malfada.jpg";
+      livro_3.src = "./img/tmonica.png";
+      livro_4.src = "./img/ironman.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/minion.jpg)';
+      /* series */
+      serie_1.src = "./img/guardioes.jpg";
+      serie_2.src = "./img/debi.jpg";
+      serie_3.src = "./img/branca.png";
+      serie_4.src = "./img/clone.jpg";
+      /* mais */
+      mais_1.src = "./img/s13.jpeg";
+      mais_2.src = "./img/s14.jpg";
+      mais_3.src = "./img/startrek.jpg";
+      mais_4.src = "./img/s8.jpg";
+
+
+    } else if (pos == 3) {
+      console.log("suspense")
+      /* Livros Suspense */
+      livro_1.src = "./img/suspense1.jpg";
+      livro_2.src = "./img/suspense2.jpg";
+      livro_3.src = "./img/suspense3.jpg";
+      livro_4.src = "./img/suspense4.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/dramacapa.jpg)';
+      /* series */
+      serie_1.src = "./img/seriesuspense1.jpg";
+      serie_2.src = "./img/seriesuspense2.jpg";
+      serie_3.src = "./img/seriesuspense3.png";
+      serie_4.src = "./img/seriesuspense4.jpg";
+      /* mais */
+      mais_1.src = "./img/maissuspense1.jpg";
+      mais_2.src = "./img/maissuspense2.jpg";
+      mais_3.src = "./img/maissuspense3.jpg";
+      mais_4.src = "./img/maissuspense4.jpg";
+    } else if (pos == 4) {
+      console.log("cartoon");
+      livro_1.src = "./img/batman.jpg";
+      livro_2.src = "./img/homemaranha.jpg";
+      livro_3.src = "./img/kalvin.jpg";
+      livro_4.src = "./img/ironman.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/bkcartoon.jpg)';
+      /* series */
+      serie_1.src = "./img/clone.jpg";
+      serie_2.src = "./img/samurai.jpg";
+      serie_3.src = "./img/arnold.jpg";
+      serie_4.src = "./img/coragem.jpg";
+      /* mais */
+      mais_1.src = "./img/s13.jpeg";
+      mais_2.src = "./img/s14.jpg";
+      mais_3.src = "./img/startrek.jpg";
+      mais_4.src = "./img/s8.jpg";
+    } else if (pos == 5) {
+      console.log("ficcao");
+      livro_1.src = "./img/19984.jpg";
+      livro_2.src = "./img/asimov.jpg";
+      livro_3.src = "./img/principiofisica.jpg";
+      livro_4.src = "./img/robot.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/andro.jpg)';
+      /* series */
+      serie_1.src = "./img/perdidos.jpg";
+      serie_2.src = "./img/s3.jpg";
+      serie_3.src = "./img/s9.jpg";
+      serie_4.src = "./img/s10.jpg";
+      /* mais */
+      mais_1.src = "./img/s13.jpeg";
+      mais_2.src = "./img/s14.jpg";
+      mais_3.src = "./img/s8.jpg";
+      mais_4.src = "./img/samurai.jpg";
+
+    } else if (pos == 6) {
+      console.log("outro");
+      livro_1.src = "./img/batman.jpg";
+      livro_2.src = "./img/homemaranha.jpg";
+      livro_3.src = "./img/kalvin.jpg";
+      livro_4.src = "./img/ironman.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/andro.jpg)';
+      /* series */
+      serie_1.src = "./img/perdidos.jpg";
+      serie_2.src = "./img/s3.jpg";
+      serie_3.src = "./img/s9.jpg";
+      serie_4.src = "./img/s10.jpg";
+      /* mais */
+      mais_1.src = "./img/maissuspense1.jpg";
+      mais_2.src = "./img/maissuspense2.jpg";
+      mais_3.src = "./img/maissuspense3.jpg";
+      mais_4.src = "./img/maissuspense4.jpg";
+    } else {
+      livro_1.src = "./img/batman.jpg";
+      livro_2.src = "./img/homemaranha.jpg";
+      livro_3.src = "./img/kalvin.jpg";
+      livro_4.src = "./img/ironman.jpg";
+      /* bk */
+      bk_recomendado.style.backgroundImage = 'url(./img/andro.jpg)';
+      /* series */
+      serie_1.src = "./img/perdidos.jpg";
+      serie_2.src = "./img/s3.jpg";
+      serie_3.src = "./img/s9.jpg";
+      serie_4.src = "./img/s10.jpg";
+      /* mais */
+      mais_1.src = "./img/maissuspense1.jpg";
+      mais_2.src = "./img/maissuspense2.jpg";
+      mais_3.src = "./img/maissuspense3.jpg";
+      mais_4.src = "./img/maissuspense4.jpg";
+    }
+  }
+
+  function obterPublicacoesPorUsuario(idUsuario) {
+    fetch(`/atividade/${idUsuario}`)
+      .then(resposta => {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            /*  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`); */
+
+            listagem = resposta;
+            for (let i = 0; i < listagem.length; i++) {
+              listaArray.push(listagem[i].anime)
+              listaArray.push(listagem[i].drama)
+              listaArray.push(listagem[i].comedia)
+              listaArray.push(listagem[i].suspense)
+              listaArray.push(listagem[i].cartoon)
+              listaArray.push(listagem[i].ficção)
+              listaArray.push(listagem[i].outro);
+            }
+
+
+
+            console.log(listaArray);
+            atualizarFeed(listaArray)
+
+
+            // alert(JSON.stringify(resposta))
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção das publicações do usuário: ${error.message}`);
+      });
+  }
+
+
+  obterPublicacoesPorUsuario(sessionStorage.identidade);
+
+  function aguardar() {
+
+  }
+
+  function finalizarAguardar(resposta) {
+
+
+    if (resposta) {
+      alert(resposta);
+    }
+  }
+</script>
+
+</html>

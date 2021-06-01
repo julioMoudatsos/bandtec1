@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro</title>
+</head>
+
+<body class="cadastros">
+    <header class="header hdcadastro">
+        <div class="redes_sociais">
+            <img src="./img/whats.svg" alt="whatsapp">
+            <img src="./img/tt.svg" alt="twitter">
+        </div>
+
+        <div class="logo">
+            <img src="./img/ptlogo.svg" alt="logo">
+            <h1><a style="color: #333; text-decoration: none;" href="index.html"> PITSTORM</a></h1>
+        </div>
+    </header>
+    <div style="padding: 0px 10px;">
+        <div class="logar">
+            <h1 class="t_logar">Logar</h1>
+            <div id="div_erro"></div>
+            <form class="formulario_cadastro loginput" id="form_login" method="post" onsubmit="return entrar()">
+                <label>Apelido</label>
+                <input name="apelido" type="text" placeholder="Apelido">
+                <label>Senha</label>
+                <input name="senha" type="password" placeholder="Senha">
+                <div class="div_contlog">
+                    <button id="btn_entrar">Entrar</button>
+
+                    <a href="cadastro.html">Cadastrar</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+
+
+
+</html>
+
+<script>
+
+    function entrar() {
+
+        var formulario = new URLSearchParams(new FormData(form_login));
+        fetch("/usuarios/autenticar", {
+            method: "POST",
+            body: formulario
+        }).then(resposta => {
+
+            if (resposta.ok) {
+
+                resposta.json().then(json => {
+                    console.log(json)
+                    sessionStorage.apelido = json.apelidoUser;
+                    sessionStorage.identidade = json.iduser;
+
+
+                    window.location.href = 'dashboard.html';
+                });
+
+            } else {
+
+                console.log('Erro de login!');
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                    finalizar_aguardar(texto);
+                });
+            }
+        });
+
+        return false;
+    }
+
+
+
+    function finalizar_aguardar(resposta) {
+
+        div_erro.innerHTML = resposta;
+    }
+
+</script>

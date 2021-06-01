@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet" href="dash.css">
+</head>
+
+<body onload="obterPublicacoes()">
+    <header class="headerdash">
+        <div class="saudacao">
+            <img src="./img/ptlogo2.svg" alt="#">
+            <h1>Bem Vindo <span id="b_usuario"></span></h1>
+        </div>
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="dashCont">
+        <div class="grafico">
+            <canvas id="myChart" width="200px" height="200px"></canvas>
+        </div>
+        <div class="card">
+            <h1>O que está pensando?</h1>
+            <h3>Compartilhe com a gente!</h3>
+            <a style="margin-top: 35px;" href="atividade.html">Minhas Atividades</a>
+        </div>
+        <div class="chats">
+            <h1>Seu Chat</h1>
+            <ul class="nav">
+                <li>
+                    <a class="chati" href="publicacoes.html">
+
+                        <p>Fórum</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="chati" href="blog.html">
+
+                        <p>Blog</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="chati" href="socio.html">
+
+                        <p>Sócio</p>
+                    </a>
+                </li>
+                <li>
+                <li>
+                    <a class="chati" href="recomendados.html">
+
+                        <p>Recomendados</p>
+                    </a>
+                </li>
+                <li>
+                    <a class="chati" href="http://localhost:3000">
+
+                        <p>Sair</p>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</body>
+<script>
+
+    b_usuario.innerHTML = sessionStorage.apelido;
+    let listaArray = [];
+    var listagem;
+
+
+    function obterPublicacoes() {
+        aguardar();
+        fetch("/atividade")
+            .then(resposta => {
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+
+
+                        listagem = JSON.stringify(resposta);
+
+                        listagem = resposta;
+                        for (let i = 0; i < listagem.length; i++) {
+                            listaArray.push(listagem[i].anime)
+                            listaArray.push(listagem[i].drama)
+                            listaArray.push(listagem[i].comedia)
+                            listaArray.push(listagem[i].suspense)
+                            listaArray.push(listagem[i].cartoon)
+                            listaArray.push(listagem[i].ficção)
+                            listaArray.push(listagem[i].outro);
+                        }
+
+
+
+
+                        atualizarFeed(listaArray);
+
+
+
+                        finalizarAguardar();
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                    finalizarAguardar("Nenhum resultado encontrado ou erro na API");
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção das publicações: ${error.message}`);
+            });
+    }
+
+    function atualizarFeed(lista) {
+
+        for (var i = 0; i < lista.length; i++) {
+            myLineChart.data.datasets[0].data[i] = lista[i]; // Would update the first dataset's value of 'March' to be 50
+            myLineChart.update();
+        }
+
+
+
+
+    }
+
+    function obterPublicacoesPorUsuario(idUsuario) {
+        fetch(`/atividade/${idUsuario}`)
+            .then(resposta => {
+                if (resposta.ok) {
+                    resposta.json().then(function (resposta) {
+                        /*  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`); */
+
+                        listagem = resposta;
+                        for (let i = 0; i < listagem.length; i++) {
+                            listaArray.push(listagem[i].anime)
+                            listaArray.push(listagem[i].drama)
+                            listaArray.push(listagem[i].comedia)
+                            listaArray.push(listagem[i].suspense)
+                            listaArray.push(listagem[i].cartoon)
+                            listaArray.push(listagem[i].ficção)
+                            listaArray.push(listagem[i].outro);
+                        }
+
+
+
+                        console.log(listaArray);
+                        atualizarFeed(listaArray);
+
+                        // alert(JSON.stringify(resposta))
+                    });
+                } else {
+                    console.error('Nenhum dado encontrado ou erro na API');
+                }
+            })
+            .catch(function (error) {
+                console.error(`Erro na obtenção das publicações do usuário: ${error.message}`);
+            });
+    }
+
+
+
+
+    function aguardar() {
+    }
+
+    function finalizarAguardar(resposta) {
+
+
+        if (resposta) {
+            alert(resposta)
+        }
+    }
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myLineChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['ANIME', 'DRAMA', 'COMEDIA', 'SUSPENSE', 'CARTOON', 'FICÇÃO', 'OUTROS'],
+            datasets: [{
+                label: 'GENEROS MAIS COMENTADOS DO MOMENTO',
+                data: [3, 2, 4, 1, 3, 6, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+</script>
+
+
+</html>

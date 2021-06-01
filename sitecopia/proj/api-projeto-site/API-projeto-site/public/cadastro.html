@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Cadastro</title>
+</head>
+
+<body class="cadastros">
+    <header class="header hdcadastro">
+        <div class="redes_sociais">
+            <img src="./img/whats.svg" alt="whatsapp">
+            <img src="./img/tt.svg" alt="twitter">
+        </div>
+
+        <div class="logo">
+            <img src="./img/ptlogo.svg" alt="logo">
+            <h1><a style="color: #333; text-decoration: none;" href="index.html"> PITSTORM</a></h1>
+        </div>
+    </header>
+    <div class="txtc">
+        <div class="container_cadastro">
+            <img src="aguarde-orange.gif" id="img_aguarde" style="display: none; width:100px">
+
+            <div id="div_erro" style="background-color: sandybrown; color: maroon; display: none;">
+                Erro no cadastro
+            </div>
+            <h1 class="t_cadastro">Venha para essa viagem!</h1>
+            <form class="formulario_cadastro" id="form_cadastro" method="post" onsubmit="return cadastrar()">
+
+                <label for="email">Email</label>
+                <input name="email" type="text" placeholder="Email">
+                <label for="apelido">Login</label>
+                <input name="apelido" type="text" placeholder="Apelido">
+                <label for="senha">Senha</label>
+                <input name="senha" type="password" placeholder="Senha">
+                <label for="senha2">Confirmar Senha</label>
+                <input type="password" placeholder="Confirmação de senha">
+                <input onclick="cadastrar()" class="btn_cadastro" type="submit" id="btn_entrar" value="Cadastrar">
+            </form>
+
+        </div>
+    </div>
+
+</body>
+
+
+
+
+</html>
+
+<script>
+
+    function cadastrar() {
+        aguardar();
+        var formulario = new URLSearchParams(new FormData(form_cadastro));
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            body: formulario
+        }).then(function (response) {
+
+            if (response.ok) {
+
+                window.location.href = 'login.html';
+
+            } else {
+
+                console.log('Erro de cadastro!');
+                response.text().then(function (resposta) {
+                    div_erro.innerHTML = resposta;
+                });
+                finalizar_aguardar();
+            }
+        });
+
+        return false;
+    }
+
+    function aguardar() {
+        btn_entrar.disabled = true;
+        img_aguarde.style.display = 'block';
+        div_erro.style.display = 'none';
+    }
+
+    function finalizar_aguardar() {
+        btn_entrar.disabled = false;
+        img_aguarde.style.display = 'none';
+        div_erro.style.display = 'block';
+    }
+
+</script>

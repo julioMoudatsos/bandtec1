@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DashBoard</title>
+  <link rel="stylesheet" href="dash.css">
+</head>
+
+<body>
+  <header class="headerdash">
+    <div class="saudacao">
+      <img src="./img/ptlogo2.svg" alt="#">
+      <h1>Membro: <span id="b_usuario"></span></h1>
+    </div>
+  </header>
+  <div id="id_modal" class="modal">
+    <h1>Atividade Registrada !</h1>
+    <img src="./img/alienok.png" alt="">
+    <button id="btnmodal">Voltar para o site</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <div class="contcompartilha">
+    <div class="cadcompartilha">
+      <h1>Cadastrar Atividade</h1>
+      <form id="form_compartilhar" method="post" onsubmit="return publicar()">
+        <input type="text" name="atividade" placeholder="atividade">
+        <select name="tipo">
+          <option value="drama">Drama</option>
+          <option value="ficção">Ficçao</option>
+          <option value="drama">Drama</option>
+          <option value="cartoon">Cartoon</option>
+          <option value="anime">Anime</option>
+          <option value="comedia">Comédia</option>
+          <option value="suspense">Suspense</option>
+          <option value="outro">Outros</option>
+        </select>
+        <input id="id_horaPost" name="dataPost" type="text" value="">
+        <button class="cadatividade">Cadastrar</button>
+        <div id="div_erro" class="msg_erro"></div>
+      </form>
+
+    </div>
+    <div class="grfc">
+      <canvas id="myChart2" width="200px" height="200px"></canvas>
+    </div>
+  </div>
+</body>
+<script>
+  b_usuario.innerHTML = sessionStorage.apelido;
+  var btn = document.querySelector("#btnmodal");
+  btn.addEventListener("click", () => {
+    id_modal.classList.remove("ativo");
+    window.location.reload();
+  })
+  function pegaHora() {
+    var data = new Date();
+
+    // Guarda cada pedaço em uma variável
+    var dia = data.getDate();
+    var dia_sem = data.getDay();
+    var mes = data.getMonth();
+    var ano2 = data.getYear();
+    var ano4 = data.getFullYear();
+    var hora = data.getHours();
+    var min = data.getMinutes();
+    var seg = data.getSeconds();
+
+    // Formata a data e a hora (note o mês + 1)
+    var str_data = ano4 + '-' + (mes + 1) + '-' + dia;
+    var corrigirHora = Number(hora) - 3;
+    var str_hora = (corrigirHora + ':' + min + ':' + seg);
+
+    // Mostra o resultado
+    id_horaPost.value = `${str_data}`;
+
+  }
+  pegaHora();
+  function publicar() {
+    aguardar();
+    var formulario = new URLSearchParams(new FormData(form_compartilhar));
+    var idUsuario = sessionStorage.identidade;
+    fetch(`/atividade/publicar/${idUsuario}`, {
+      method: "POST",
+      body: formulario
+    }).then(resposta => {
+
+      if (resposta.ok) {
+        obterPublicacoesPorUsuario(idUsuario);
+        var mod = document.querySelector("#id_modal");
+        mod.classList.add("ativo");
+        finalizarAguardar();
+      } else {
+        console.log('Erro ao publicar!');
+        resposta.text().then(texto => {
+          console.error(texto);
+          finalizarAguardar(texto);
+        });
+      }
+    });
+
+    return false;
+  }
+  let listaArray = [];
+  var listagem;
+
+
+  function obterPublicacoes() {
+    aguardar();
+    fetch("/atividade")
+      .then(resposta => {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            console.log(`dados: ${JSON.stringify(resposta)}`);
+
+            var listagem = JSON.stringify(resposta);
+
+
+
+            atualizarFeed(resposta);
+
+            finalizarAguardar();
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+          finalizarAguardar("Nenhum resultado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção das publicações: ${error.message}`);
+      });
+  }
+
+  function atualizarFeed(lista) {
+
+    for (var i = 0; i < lista.length; i++) {
+      myLineChart.data.datasets[0].data[i] = lista[i]; // Would update the first dataset's value of 'March' to be 50
+      myLineChart.update();
+    }
+
+
+
+
+  }
+
+  function obterPublicacoesPorUsuario(idUsuario) {
+    fetch(`/atividade/${idUsuario}`)
+      .then(resposta => {
+        if (resposta.ok) {
+          resposta.json().then(function (resposta) {
+            /*  console.log(`Dados recebidos: ${JSON.stringify(resposta)}`); */
+
+            listagem = resposta;
+            for (let i = 0; i < listagem.length; i++) {
+              listaArray.push(listagem[i].anime)
+              listaArray.push(listagem[i].drama)
+              listaArray.push(listagem[i].comedia)
+              listaArray.push(listagem[i].suspense)
+              listaArray.push(listagem[i].cartoon)
+              listaArray.push(listagem[i].ficção)
+              listaArray.push(listagem[i].outro);
+            }
+
+
+
+            console.log(listaArray);
+            atualizarFeed(listaArray);
+
+            // alert(JSON.stringify(resposta))
+          });
+        } else {
+          console.error('Nenhum dado encontrado ou erro na API');
+        }
+      })
+      .catch(function (error) {
+        console.error(`Erro na obtenção das publicações do usuário: ${error.message}`);
+      });
+  }
+
+
+  obterPublicacoesPorUsuario(sessionStorage.identidade);
+
+  function aguardar() {
+    div_erro.style.visibility = 'hidden';
+  }
+
+  function finalizarAguardar(resposta) {
+
+
+    if (resposta) {
+      div_erro.style.visibility = 'visible';
+      div_erro.innerHTML = resposta;
+    }
+  }
+
+  var ctx = document.getElementById('myChart2').getContext('2d');
+  var myLineChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['ANIME', 'DRAMA', 'COMEDIA', 'SUSPENSE', 'CARTOON', 'FICÇÃO', 'OUTROS'],
+      datasets: [{
+        label: 'SEUS FAVORITOS',
+        data: [3, 2, 4, 1, 3, 6, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+</script>
+
+
+</html>

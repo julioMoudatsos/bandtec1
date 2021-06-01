@@ -1,0 +1,13 @@
+.container{
+  display: flex;
+}
+.numeros{
+  margin: 5px;
+  background: tomato;
+  
+}
+
+.cor{
+  background: red;
+  color: white;
+}
