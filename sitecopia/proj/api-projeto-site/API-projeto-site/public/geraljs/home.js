@@ -1,6 +1,6 @@
 import animaquadrado from "../js/quadrados.js"
 import Slide from "../js/slide.js";
-
+/* animar quadrados */
 const squares = new animaquadrado();
 console.log(squares)
 
