@@ -2902,10 +2902,10 @@ input[type=range]::-webkit-slider-thumb {
 .container_cadastro {
   -ms-flex-negative: 0;
   flex-shrink: 0;
-  max-width: 700px;
+  max-width: 800px;
   overflow: hidden;
   border-radius: 10px;
-  height: 520px;
+  height: 550px;
   background-image: url("../../img/bkcad2.svg");
   background-position: center;
   background-size: cover;
@@ -2923,11 +2923,13 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .formulario_cadastro {
-  width: 90%;
+  width: 70%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   padding: 15px 5px;
+
+  
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -2961,12 +2963,17 @@ input[type=range]::-webkit-slider-thumb {
   color: white;
 }
 
+.erroremail{
+  background-color: tomato !important;
+  color: #090a0f !important;
+}
 .btn_cadastro {
   width: 200px !important;
-  background-color: #FEC63E;
+  background-color: #1c1e2b;
+ 
   font-weight: bold;
   letter-spacing: 1.5px;
-  color: #090a0f;
+  color: white;
   font-family: "Nunito", sans-serif;
   font-size: 18px;
   -ms-flex-item-align: start;
@@ -2975,9 +2982,42 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
   -webkit-transition: .3s;
   transition: .3s;
+
+}
+.btn_cadastro2{
+  width: 200px !important;
+  background-color: #001D7D;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: white;
+  font-family: "Nunito", sans-serif;
+  font-size: 18px;
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  margin-left: 30px !important;
+  cursor: pointer;
+  -webkit-transition: .3s;
+  transition: .3s;
+  padding: 10px 5px;
+  border-radius: 4px;
+  border-style: none;
 }
 
-.btn_cadastro:hover {
+.correto{
+  color: #FEC63E !important;
+}
+.correto::after{
+  content: "";
+  background-image: url("./img/planeta.svg");
+  background-size: cover;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.btnativo:hover {
   background-color: #86ffff;
   letter-spacing: 5px;
 }
@@ -3108,3 +3148,44 @@ input[type=range]::-webkit-slider-thumb {
   color: #090a0f;
 }
 
+.tnt{
+  
+  width: 100%;
+  display: flex;
+}
+.rules{
+  height: 220px;
+  width: 300px;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+
+}
+
+.rules h1{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 23px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+}
+.rules p{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: bold;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  color: white;
+  font-size: 16px;
+}
+#div_erro{
+  color: white;
+}
+.pass{
+  background-color: rgba(172, 255, 47, 0.63) !important ;
+}
+.btnativo{
+  background-color: #FEC63E !important;
+}

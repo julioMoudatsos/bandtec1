@@ -30,18 +30,33 @@
                 Erro no cadastro
             </div>
             <h1 class="t_cadastro">Venha para essa viagem!</h1>
-            <form class="formulario_cadastro" id="form_cadastro" method="post" onsubmit="return cadastrar()">
+            <div class="tnt">
+                <form class="formulario_cadastro" id="form_cadastro" method="post" onsubmit="return cadastrar()">
 
-                <label for="email">Email</label>
-                <input name="email" type="text" placeholder="Email">
-                <label for="apelido">Login</label>
-                <input name="apelido" type="text" placeholder="Apelido">
-                <label for="senha">Senha</label>
-                <input name="senha" type="password" placeholder="Senha">
-                <label for="senha2">Confirmar Senha</label>
-                <input type="password" placeholder="Confirmação de senha">
-                <input onclick="cadastrar()" class="btn_cadastro" type="submit" id="btn_entrar" value="Cadastrar">
-            </form>
+                    <label for="email">Email</label>
+                    <input id="id_email" name="email" onkeyup="validar('email')" type="text" placeholder="Email"
+                        value="j@.">
+                    <label for="apelido">Apelido</label>
+                    <input disabled id="id_apelido" name="apelido" onkeyup="validar('apelido')" type="text"
+                        placeholder="Apelido">
+                    <label for="senha">Senha</label>
+                    <input id="id_senha" disabled onkeyup="validar('senha')" name="senha" type="text"
+                        placeholder="Senha">
+                    <label for="senha2">Confirmar Senha</label>
+                    <input id="id_confirmar" disabled onkeyup="validar('confirmar')" type="text"
+                        placeholder="Confirmação de senha">
+                    <input onclick="cadastrar()" disabled class="btn_cadastro" type="submit" id="btn_entrar"
+                        value="Cadastrar">
+                </form>
+                <div class="rules">
+                    <h1>Sua senha deve ter:</h1>
+                    <p class="passw">1 letra minúscula</p>
+                    <p class="passw">1 letra maiúscula</p>
+                    <p class="passw">Mínimo 1 numeral</p>
+                    <p class="passw">1 caractere especial</p>
+                    <p class="passw">Mínimo 8 caracteres</p>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -55,7 +70,135 @@
 
 <script>
 
+
+    function validar(tipo) {
+        if (tipo == "email") {
+            if (id_email.value.indexOf("@") == -1 || id_email.value.indexOf(".") == -1) {
+                id_email.classList.add("erroremail");
+                id_email.classList.remove("pass");
+                id_apelido.disabled = true;
+            } else {
+                id_email.classList.remove("erroremail");
+                id_email.classList.add("pass");
+                id_apelido.disabled = false;
+
+
+            }
+
+        }
+
+        if (tipo == "apelido") {
+            if (id_apelido.value.length > 0) {
+                id_apelido.classList.remove("erroremail");
+                id_apelido.classList.add("pass");
+                id_senha.disabled = false;
+            } else {
+                id_apelido.classList.add("erroremail");
+                id_apelido.classList.remove("pass");
+
+                id_senha.disabled = true;
+            }
+        }
+
+        if (tipo == "senha") {
+
+            let checks = document.querySelectorAll(".passw");
+            const minuscula = new RegExp('(?=.*[a-z])');
+            const maiuscula = new RegExp('(?=.*[A-Z])');
+
+            const numero = new RegExp('(?=.*[0-9])');
+            const especial = new RegExp('(?=.*[!@#\$%\^&\*])');
+
+            const caracter = new RegExp('(?=.{8,})');
+
+            if (minuscula.test(id_senha.value)) {
+                checks[0].classList.add("correto");
+            } else {
+                checks[0].classList.remove("correto");
+            }
+
+            if (maiuscula.test(id_senha.value)) {
+                checks[1].classList.add("correto");
+            } else {
+                checks[1].classList.remove("correto");
+            }
+
+            if (numero.test(id_senha.value)) {
+                checks[2].classList.add("correto");
+            } else {
+                checks[2].classList.remove("correto");
+            }
+
+            if (especial.test(id_senha.value)) {
+                checks[3].classList.add("correto");
+            } else {
+                checks[3].classList.remove("correto");
+            }
+
+            if (caracter.test(id_senha.value)) {
+                checks[4].classList.add("correto");
+            } else {
+                checks[4].classList.remove("correto");
+            }
+
+            if (id_confirmar.disabled = false) {
+                if (checks[0].classList.contains("correto") && checks[1].classList.contains("correto") && checks[2].classList.contains("correto") && checks[3].classList.contains("correto") && checks[4].classList.contains("correto") && id_senha.value == id_confirmar.value) {
+
+                    id_senha.classList.remove("erroremail");
+                    id_senha.classList.add("pass");
+
+
+                } else {
+                    id_senha.classList.remove("pass");
+                    id_senha.classList.add("erroremail");
+                    id_confirmar.disabled = true;
+
+                }
+            } else {
+                if (checks[0].classList.contains("correto") && checks[1].classList.contains("correto") && checks[2].classList.contains("correto") && checks[3].classList.contains("correto") && checks[4].classList.contains("correto")) {
+                    id_confirmar.disabled = false;
+                    id_senha.classList.remove("erroremail");
+                    id_senha.classList.add("pass");
+                    id_confirmar.value = "";
+                    id_confirmar.classList.remove("pass");
+                } else {
+                    id_senha.classList.remove("pass");
+                    id_senha.classList.add("erroremail");
+                    id_confirmar.disabled = true;
+
+                }
+            }
+
+
+
+
+
+        }
+
+        if (tipo == "confirmar") {
+
+            if (id_confirmar.value == id_senha.value) {
+                id_senha.classList.add("pass");
+                id_confirmar.classList.add("pass");
+                id_confirmar.classList.remove("erroemail");
+            } else {
+                id_senha.classList.remove("pass");
+
+                id_confirmar.classList.add("erroremail");
+            }
+
+        }
+        if (id_email.classList.contains("pass") && id_apelido.classList.contains("pass") && id_senha.classList.contains("pass") && id_confirmar.classList.contains("pass") && id_senha.value == id_confirmar.value) {
+            btn_entrar.disabled = false;
+            btn_entrar.classList.add("btnativo");
+        } else {
+            btn_entrar.disabled = true;
+            btn_entrar.classList.remove("btnativo");
+        }
+    }
+
     function cadastrar() {
+
         aguardar();
         var formulario = new URLSearchParams(new FormData(form_cadastro));
         fetch("/usuarios/cadastrar", {
