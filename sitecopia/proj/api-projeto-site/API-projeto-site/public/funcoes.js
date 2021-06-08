@@ -3,7 +3,7 @@ let nome_usuario;
 let email_usuario;
 
 
-
+/* redireciona para o login */
 function redirecionar_login() {
     window.location.href = 'login.html';
 }
