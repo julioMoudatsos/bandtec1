@@ -4,7 +4,7 @@ export default function coracao() {
 
   const cor = document.querySelectorAll(".heart");
   let like = 0;
-
+  /* loop foreach */
   cor.forEach((c, index) => {
 
     c.addEventListener("click", () => {
